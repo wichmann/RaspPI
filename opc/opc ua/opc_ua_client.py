@@ -26,7 +26,7 @@ from time import sleep
 from opcua import Client
 
 
-client = Client("opc.tcp://192.168.10.132:4840")
+client = Client("opc.tcp://192.168.24.190:4840")
 #client.set_security_string("Basic256,SignAndEncrypt,certificate.pem,privatekey.pem")
 
 try:
