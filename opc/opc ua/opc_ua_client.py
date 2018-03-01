@@ -4,6 +4,7 @@ Einfacher OPC UA-Client
 
 Notwendige Bibliothek installieren:
 
+    apt-get install python3-lxml
     pip3 install opcua 
 
 Für den Zugriff auf Variablen wird die OPC UA Notation genutzt:
