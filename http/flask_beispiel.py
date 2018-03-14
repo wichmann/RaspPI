@@ -16,10 +16,10 @@ app = Flask(__name__)
 @app.route('/')
 def index():
     # gebe Antwort an aufrufenden Client zurück
-    return 'Hallo World!'
+    return 'Hello World!'
 
 
 if __name__ == '__main__':
     # starte Flask-Server im Debug-Modus
     app.debug = True
-    app.run(host= '0.0.0.0')
+    app.run(host= '0.0.0.0', port=5000)
