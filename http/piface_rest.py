@@ -1,11 +1,13 @@
 import pifacedigitalio as p
 from flask import Flask
 
+
 # initialisiere PiFace
 p.init()
 
 # initialisiere Flask server
 app = Flask(__name__)
+
 
 @app.route('/')
 def info():
@@ -34,4 +36,6 @@ def eingang_auslesen(eingang):
        return 'Eingang ist: AUS.'
 
 if __name__ == '__main__':
-    app.run(host= '0.0.0.0')
+    # starte Flask-Server im Debug-Modus
+    app.debug = True
+    app.run(host='0.0.0.0', port=5000)

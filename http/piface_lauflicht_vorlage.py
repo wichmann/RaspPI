@@ -11,6 +11,7 @@ import threading
 from flask import Flask
 from flask import request
 
+
 # TODO: Bibliothek zur Ansteuerung des PiFace importieren und PiFace initialisieren
 
 # initialisiere Flask server

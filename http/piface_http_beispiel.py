@@ -8,6 +8,7 @@
 from flask import Flask
 from flask import request
 
+
 # initialisiere Flask server
 app = Flask(__name__)
 
@@ -23,7 +24,7 @@ formular = """
            </body>
            </html>
            """
-              
+
 @app.route('/')
 def hauptseite():
     # schicke HTML-Seite ohne einen eingefügten String zurück
@@ -43,6 +44,6 @@ def verarbeite_formular():
         return formular.format(wert=parameter)
 
 if __name__ == '__main__':
+    # starte Flask-Server im Debug-Modus
     app.debug = True
-    app.run(host= '0.0.0.0')
-
+    app.run(host='0.0.0.0', port=5000)

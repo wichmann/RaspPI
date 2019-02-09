@@ -8,6 +8,7 @@
 from flask import Flask
 from flask import request
 
+
 # initialisiere Flask server
 app = Flask(__name__)
 
@@ -58,6 +59,6 @@ def ausgang():
             return formular.format(checked_ein='checked', checked_aus='', ausgang='1')
 
 if __name__ == '__main__':
+    # starte Flask-Server im Debug-Modus
     app.debug = True
-    app.run(host= '0.0.0.0')
-
+    app.run(host='0.0.0.0', port=5000)
