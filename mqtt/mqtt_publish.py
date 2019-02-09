@@ -7,5 +7,6 @@
 import paho.mqtt.publish as publish
 
 
-publish.single("test/topic", "nachricht", hostname="192.168.24.132") # test.mosquitto.org
+# veröffentliche eine neue Nachricht unter dem angegebenen Thema
+publish.single("test/topic", "nachricht", hostname="192.168.24.132")
 

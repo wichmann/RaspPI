@@ -25,15 +25,18 @@ def on_subscribe(mqttc, obj, mid, granted_qos):
 def on_log(mqttc, obj, level, string):
     print(string)
 
-# If you want to use a specific client id, use  mqttc = mqtt.Client("client-id")
-# but note that the client id must be unique on the broker. Leaving the client
-# id parameter empty will generate a random id for you.
+# erzeuge Objekt für die Verbindung zum MQTT-Broker
 mqttc = mqtt.Client()
+# setze Funktionen für verschiedene Ereignisse
 mqttc.on_message = on_message
 mqttc.on_connect = on_connect
 mqttc.on_publish = on_publish
 mqttc.on_subscribe = on_subscribe
-mqttc.connect("192.168.24.132", 1883, 60) # test.mosquitto.org
+# baue Verbindung zum Broker auf
+mqttc.connect("192.168.24.129", port=1883, keepalive=120)
+
+# abboniere ein Thema beim Broker
 mqttc.subscribe(TOPIC, 0)
 
+# starte eine Endlosschleife, die auf neue Nachrichten des Brokers wartet
 mqttc.loop_forever()
