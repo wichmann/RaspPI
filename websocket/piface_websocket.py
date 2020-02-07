@@ -60,7 +60,7 @@ def lauflicht_steuerung():
 
 def start_server(host='127.0.0.1', port=9000):
     address = 'ws://' + host + ':' + str(port)
-    factory = WebSocketServerFactory(address, debug=False)
+    factory = WebSocketServerFactory(address)
     factory.protocol = MyServerProtocol
 
     loop = asyncio.get_event_loop()
