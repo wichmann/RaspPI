@@ -18,10 +18,10 @@ formular = """
            <body>
            <h1>PiFace-Ausgänge</h1>
            <form action="/ausgang" method="GET">
-             Ausgang: <input type="text" name="ausgang" value="{ausgang}"><br>
-             <input type="radio" name="zustand" value="ein" {checked_ein}> Ein<br></input>
-             <input type="radio" name="zustand" value="aus" {checked_aus}> Aus<br></input>
-             <input type="submit" value="Absenden" />
+             <p>Ausgang: <input type="text" name="ausgang" value="{ausgang}"></p>
+             <p><input type="radio" name="zustand" value="ein" {checked_ein}> Ein</input>
+             <input type="radio" name="zustand" value="aus" {checked_aus}> Aus</input></p>
+             <p><input type="submit" value="Absenden" /></p>
            </form>
            </body>
            </html>
