@@ -9,7 +9,7 @@ RaspberryPi mit PiFace zuzugreifen und Ausgänge zu setzen.
 Das Skript benötigt Python 3 und die Python-Bibliothek autobahn ([1]). Die
 Bibliothek lässt sich wie folgt installieren:
 
-    pip3 install autobahn
+    pip3 install autobahn==20.12.3
 
 
 ## Links 
