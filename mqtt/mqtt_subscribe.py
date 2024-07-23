@@ -1,42 +1,54 @@
 #! /usr/bin/env python3
 
-# Notwendige Bibliothek installieren:
-#     pip3 install paho-mqtt
+"""
+Einfaches Python-Skript um Topics auf einem MQTT-Broker zu abbonieren.
 
+Notwendige Bibliothek installieren:
+ - pip3 install paho-mqtt
+
+"""
 
 import paho.mqtt.client as mqtt
 
 
-TOPIC = "test/topic"
+TOPIC = "#"
 
 
-def on_connect(mqttc, obj, flags, rc):
-    print("rc: "+str(rc))
+def on_connect(client, userdata, flags, reason_code, properties):
+    if reason_code == 0:
+        print(f'Connected to broker ({reason_code}).')
+    if reason_code > 0:
+        print('Error connecting to broker!')
 
-def on_message(mqttc, obj, msg):
-    print(msg.topic+" "+str(msg.qos)+" "+str(msg.payload))
 
-def on_publish(mqttc, obj, mid):
-    print("mid: "+str(mid))
+def on_message(client, userdata, message):
+    print(f'Incoming message on topic "{message.topic}": {message.payload} (QoS: {message.qos})')
 
-def on_subscribe(mqttc, obj, mid, granted_qos):
-    print("Subscribed: "+str(mid)+" "+str(granted_qos))
 
-def on_log(mqttc, obj, level, string):
-    print(string)
+def on_publish(client, userdata, mid, reason_codes, properties):
+    print(f'Publishing message on topic ({mid})')
+
+
+def on_subscribe(client, userdata, mid, reason_codes, properties):
+    for sub_result in reason_codes:
+        if sub_result == 1:
+            print(f'Subscribing to topic ({reason_code}, {mid}).')
+        if sub_result >= 128:
+            print('Error subscribing to topic!')
+
 
 # erzeuge Objekt für die Verbindung zum MQTT-Broker
-mqttc = mqtt.Client()
+mqtt_client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2)
 # setze Funktionen für verschiedene Ereignisse
-mqttc.on_message = on_message
-mqttc.on_connect = on_connect
-mqttc.on_publish = on_publish
-mqttc.on_subscribe = on_subscribe
+mqtt_client.on_message = on_message
+mqtt_client.on_connect = on_connect
+mqtt_client.on_publish = on_publish
+mqtt_client.on_subscribe = on_subscribe
 # baue Verbindung zum Broker auf
-mqttc.connect("192.168.24.129", port=1883, keepalive=120)
+mqtt_client.connect('192.168.10.52', port=1883, keepalive=120)
 
 # abboniere ein Thema beim Broker
-mqttc.subscribe(TOPIC, 0)
+mqtt_client.subscribe(TOPIC, 0)
 
 # starte eine Endlosschleife, die auf neue Nachrichten des Brokers wartet
-mqttc.loop_forever()
+mqtt_client.loop_forever()
