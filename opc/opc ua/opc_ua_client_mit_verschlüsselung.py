@@ -23,13 +23,13 @@ Quelle: http://documentation.unified-automation.com/uasdkhp/1.0.0/html/_l2_ua_no
 
 """
 
-from time import sleep
+
 from opcua import Client
 
 
 client = Client("opc.tcp://192.168.24.190:4840")
-
-# setze Benutzername und Passwort
+client.set_security_string("Basic256Sha256,SignAndEncrypt,certificate.der,privatekey.pem")
+client.application_uri = 'urn:r324-01:foobar:myselfsignedclient' # kommt aus dem Zertifikat 'certificate.der'
 client.set_user('admin')
 client.set_password('wago')
 
@@ -39,12 +39,7 @@ try:
     # greife auf Elemente im Baum zu
     root = client.get_root_node()
     objects = client.get_objects_node()
-    app = objects.get_child(["2:DeviceSet", "4:WAGO 750-8102 PFC100 2ETH RS", "4:Resources", "4:Application"])
-
-    # erzeuge Objekte für Knoten aus dem Baum über OPC UA Notation
-    eingang1 = client.get_node('ns=4;s=|var|CODESYS Control for Raspberry Pi SL.Application.PLC_PRG.eingang1')
-    eingang2 = client.get_node('ns=4;s=|var|CODESYS Control for Raspberry Pi SL.Application.PLC_PRG.eingang2')
-    ausgang = client.get_node('ns=4;s=|var|CODESYS Control for Raspberry Pi SL.Application.PLC_PRG.ausgang')
+    ausgang = client.get_node('ns=4;s=|var|CODESYS Control for Raspberry Pi 64 SL.Application.PLC_PRG.ausgang')
 
     # OPC-Variablen besitzen vier Attribute: Datentyp, Wert, Status, Zeitstempel
     data = ausgang.get_data_value()
@@ -54,26 +49,6 @@ try:
     print('Status:      ', data.StatusCode)
     print('Zeitstempel: ', data.SourceTimestamp)
     print('*******************************************')
-
-    # Variable ausgang auslesen
-    print('Wert der Variable "ausgang": ', ausgang.get_value())
-
-    # Variablen eingang1 und eingang2 schreiben
-    print('Setzen beider Eingänge auf True!')
-    eingang1.set_value(True)
-    eingang2.set_value(True)
-    sleep(1.0)
-
-    # Variable ausgang auslesen
-    print('Wert der Variable "ausgang": ', ausgang.get_value())
-
-    # Variablen eingang1 und eingang2 schreiben
-    print('Setzen eines Eingangs auf False!')
-    eingang2.set_value(False)
-    sleep(1.0)
-
-    # Variable ausgang auslesen
-    print('Wert der Variable "ausgang": ', ausgang.get_value())
 
 finally:
     client.disconnect()
